@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HEADSTRONG Jiu-Jitsu Pacheco | Disciplina e Saúde</title>
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="public/favicon.png" type="image/png">
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#002D62',
+                        royal: '#007FFF',
+                        wa: '#25D366',
+                        premium: '#D4AF37',
+                        // Cores da Tabela de Horários
+                        infantil: '#FCD34D', // Amarelo
+                        iniciante: '#3B82F6', // Azul
+                        avancado: '#000000', // Preto
+                        competicao: '#F97316', // Laranja
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'reveal': 'reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        reveal: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Estilos do Tema Bold Typography */
+        .glass-nav {
+            background: #002D62;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-overlay {
+            background: linear-gradient(to bottom, rgba(0, 45, 98, 0.6) 0%, #002D62 100%);
+        }
+
+        .card-overlay {
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+        }
+
+        /* FAQ Accordion Styles */
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding-bottom: 1rem;
+        }
+
+        /* Map Grayscale Filter */
+        .map-container iframe {
+            filter: grayscale(1);
+            transition: filter 0.5s ease;
+        }
+        .map-container iframe:focus, .map-container iframe:hover {
+            filter: grayscale(0);
+        }
+
+        /* Schedule Container Mobile */
+        .schedule-scroll {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .schedule-scroll::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-900 bg-white selection:bg-royal selection:text-white">
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 w-full z-50 glass-nav transition-all duration-300" id="main-header">
+        <div class="container mx-auto px-6 md:px-10 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-4">
+                <img src="public/AISelect_20260421_133613_Instagram.jpg" alt="Headstrong Logo" class="w-12 h-12 object-cover bg-navy">
+                <span class="font-black tracking-tighter text-2xl text-white uppercase">HEADSTRONG</span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <nav class="hidden lg:flex items-center gap-8 text-sm font-bold uppercase tracking-widest text-white/70">
+                <a href="#modalidades" class="hover:text-white transition-colors">Modalidades</a>
+                <a href="#professor" class="hover:text-white transition-colors">Daniel Viana</a>
+                <a href="#horarios" class="hover:text-white transition-colors">Horários</a>
+                <a href="#avaliacoes" class="hover:text-white transition-colors">Avaliações</a>
+                <a href="#faq" class="hover:text-white transition-colors">FAQ</a>
+            </nav>
+
+            <!-- CTA Button -->
+            <div class="hidden md:flex items-center gap-4">
+                <a href="https://wa.me/5521999157423?text=Olá! Vi o site e gostaria de agendar uma aula experimental." 
+                   target="_blank" rel="noopener noreferrer"
+                   class="bg-wa text-white px-6 py-3 rounded-full font-bold text-sm hover:brightness-110 shadow-lg transition-all uppercase tracking-widest">
+                    Agendar Aula
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="lg:hidden text-white" id="menu-toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div class="lg:hidden hidden bg-navy w-full border-t border-white/10 py-6 px-4" id="mobile-menu">
+            <nav class="flex flex-col gap-4 text-sm font-bold text-center text-white/70 uppercase tracking-widest">
+                <a href="#modalidades" class="py-2 hover:text-white">Modalidades</a>
+                <a href="#professor" class="py-2 hover:text-white">Daniel Viana</a>
+                <a href="#horarios" class="py-2 hover:text-white">Horários</a>
+                <a href="#avaliacoes" class="py-2 hover:text-white">Avaliações</a>
+                <a href="#faq" class="py-2 hover:text-white">FAQ</a>
+                <a href="https://wa.me/5521999157423?text=Olá! Gostaria de consultar os horários de treino disponíveis." 
+                   target="_blank" rel="noopener noreferrer"
+                   class="bg-wa text-white py-4 rounded-xl font-black mt-4 shadow-lg active:scale-95 transition-transform text-center">
+                    QUERO MEU HORÁRIO
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+        <!-- Background -->
+        <div class="absolute inset-0 z-0">
+            <img src="public/AISelect_20260421_134026_Instagram.jpg" alt="Jiu Jitsu Training" class="w-full h-full object-cover">
+            <div class="absolute inset-0 hero-overlay"></div>
+        </div>
+
+        <div class="container mx-auto px-6 md:px-10 relative z-10 py-20 text-center md:text-left">
+            <div class="max-w-4xl animate-fade-in-up">
+                <!-- Social Proof Badge -->
+                <div class="inline-block px-4 py-1 bg-royal text-white text-[10px] font-bold tracking-[0.3em] uppercase rounded-sm mb-8">
+                    HEADSTRONG • PACHECO - SÃO GONÇALO
+                </div>
+
+                <h1 class="text-4xl sm:text-6xl md:text-8xl font-black text-white leading-[0.9] uppercase tracking-tighter mb-10">
+                    Forjando <span class="text-royal">Disciplina</span>, Força e Saúde.
+                </h1>
+                
+                <p class="text-lg md:text-xl text-white/70 mb-12 leading-relaxed max-w-xl">
+                    O ambiente ideal para adultos e crianças transformarem suas vidas através do Jiu-Jitsu e do Treino Funcional de alta performance.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-6 items-center md:items-start justify-center md:justify-start">
+                    <a href="https://wa.me/5521999157423?text=Olá! Quero agendar minha aula experimental gratuita na Headstrong." 
+                       target="_blank" rel="noopener noreferrer"
+                       class="bg-wa text-white px-12 py-6 rounded-md font-black uppercase text-sm shadow-2xl hover:brightness-110 transition-all flex items-center gap-3">
+                        Agendar Aula Experimental
+                    </a>
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=R.+Palmira+Lima+dos+Santos,+100+-+Pacheco,+São+Gonçalo+-+RJ" 
+                       target="_blank"
+                       class="bg-white/10 backdrop-blur-md text-white border border-white/20 px-8 py-6 rounded-md font-bold uppercase text-sm hover:bg-white/20 transition-all flex items-center gap-2">
+                        Como Chegar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modalidades Section -->
+    <section id="modalidades" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-6 md:px-10">
+            <div class="mb-12 md:20 reveal">
+                <h2 class="text-xs font-black uppercase tracking-[0.3em] text-royal mb-4 italic">Modalidades de Alta Performance</h2>
+                <h3 class="text-3xl md:text-6xl font-black text-navy leading-none uppercase tracking-tighter">O que oferecemos no <br><span class="text-royal">nosso Tatame.</span></h3>
+                <div class="w-16 h-1 bg-navy mt-6 md:mt-10"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1: Kids -->
+                <div class="group relative aspect-[3/4] bg-gray-100 rounded-2xl overflow-hidden shadow-2xl border border-gray-100 reveal">
+                    <img src="public/AISelect_20260421_132301_Maps.jpg" alt="Jiu-Jitsu Infantil" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all"></div>
+                    <div class="absolute bottom-0 p-8 text-white w-full">
+                        <p class="text-[10px] uppercase font-black tracking-[0.2em] text-premium mb-2">Kids & Juniors</p>
+                        <h3 class="font-black text-3xl leading-none uppercase mb-6">Jiu-Jitsu Infantil</h3>
+                        <a href="https://wa.me/5521999157423?text=Olá! Gostaria de mais informações sobre as aulas de Jiu-Jitsu Infantil para meu filho(a)." 
+                           target="_blank" rel="noopener noreferrer"
+                           class="inline-block bg-white text-navy font-black py-3 px-8 rounded text-[10px] uppercase tracking-widest transition-all hover:bg-royal hover:text-white">
+                            Saiba Mais
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 2: Adulto -->
+                <div class="group relative aspect-[3/4] bg-gray-100 rounded-2xl overflow-hidden shadow-2xl border border-gray-100 reveal" style="transition-delay: 150ms;">
+                    <img src="public/AISelect_20260421_132558_Maps.jpg" alt="Jiu-Jitsu Adulto" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all"></div>
+                    <div class="absolute bottom-0 p-8 text-white w-full">
+                        <p class="text-[10px] uppercase font-black tracking-[0.2em] text-royal mb-2">Technical & Elite</p>
+                        <h3 class="font-black text-3xl leading-none uppercase mb-6">Jiu-Jitsu Adulto</h3>
+                        <a href="https://wa.me/5521999157423?text=Olá! Tenho interesse nas aulas de Jiu-Jitsu para adultos. Como funcionam as turmas?" 
+                           target="_blank" rel="noopener noreferrer"
+                           class="inline-block bg-white text-navy font-black py-3 px-8 rounded text-[10px] uppercase tracking-widest transition-all hover:bg-royal hover:text-white">
+                            Saber Mais
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 3: Funcional -->
+                <div class="group relative aspect-[3/4] bg-gray-100 rounded-2xl overflow-hidden shadow-2xl border border-gray-100 reveal" style="transition-delay: 300ms;">
+                    <img src="public/AISelect_20260421_132704_Maps.jpg" alt="Treinamento Funcional" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all"></div>
+                    <div class="absolute bottom-0 p-8 text-white w-full">
+                        <p class="text-[10px] uppercase font-black tracking-[0.2em] text-wa mb-2">Performance & Saúde</p>
+                        <h3 class="font-black text-3xl leading-none uppercase mb-6">Treino Funcional & Mobilidade</h3>
+                        <a href="https://wa.me/5521999157423?text=Olá! Gostaria de saber mais sobre o Treinamento Funcional e Mobilidade." 
+                           target="_blank" rel="noopener noreferrer"
+                           class="inline-block bg-white text-navy font-black py-3 px-8 rounded text-[10px] uppercase tracking-widest transition-all hover:bg-royal hover:text-white">
+                            Saiba Mais
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professor Section -->
+    <section id="professor" class="py-16 md:py-24 bg-gray-50 overflow-hidden border-t border-gray-100">
+        <div class="container mx-auto px-6 md:px-10 flex flex-col md:flex-row items-center gap-12 md:gap-16">
+            <!-- Text Side -->
+            <div class="w-full md:w-1/2 reveal">
+                <h2 class="text-xs font-black uppercase tracking-[0.3em] text-royal mb-4 italic">Didática e Liderança</h2>
+                <h3 class="text-4xl md:text-7xl font-black text-navy mb-8 leading-none uppercase tracking-tighter">Daniel Viana: <br><span class="text-royal">Mestre na Arte.</span></h3>
+                
+                <div class="space-y-6 text-gray-600 text-lg leading-relaxed mb-10">
+                    <p>Referência técnica em São Gonçalo, o <span class="font-bold text-navy uppercase">Professor Daniel Viana</span> lidera a Headstrong com uma metodologia focada no desenvolvimento integral do aluno.</p>
+                    <div class="bg-navy p-10 rounded-2xl border-l-[8px] border-royal shadow-xl">
+                        <p class="text-white italic text-xl">"Nossa missão é transformar vidas através do respeito e da excelência técnica, seja no Jiu-Jitsu ou no condicionamento físico."</p>
+                    </div>
+                    <p>Com anos de experiência, Daniel garante que cada aula seja uma oportunidade de evolução, sempre respeitando as limitações e incentivando a superação diária.</p>
+                </div>
+
+            <div class="flex gap-4">
+                <img src="public/AISelect_20260421_133923_Instagram.jpg" class="w-24 h-24 object-cover rounded-xl shadow-lg hover:scale-105 transition-all">
+                <img src="public/AISelect_20260421_134026_Instagram.jpg" class="w-24 h-24 object-cover rounded-xl shadow-lg hover:scale-105 transition-all">
+                <img src="public/AISelect_20260421_132704_Maps.jpg" class="w-24 h-24 object-cover rounded-xl shadow-lg hover:scale-105 transition-all">
+            </div>
+            </div>
+
+            <!-- Image Side -->
+            <div class="w-full md:w-1/2 reveal" style="transition-delay: 200ms;">
+                <div class="relative">
+                    <img src="public/AISelect_20260421_133151_Google.jpg" alt="Professor Daniel Viana" class="rounded-3xl shadow-2xl object-cover object-top w-full h-[400px] md:h-[600px] hover:scale-[1.02] transition-all duration-700">
+                    <div class="absolute -bottom-4 -right-4 md:-bottom-6 md:-right-6 bg-royal px-6 md:px-10 py-4 md:py-6 rounded-2xl shadow-xl text-white">
+                        <p class="text-[10px] font-black uppercase tracking-widest text-white/70">Expert Coach</p>
+                        <p class="font-black text-3xl uppercase tracking-tighter leading-none">Daniel Viana</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Horários Section (Schedule) -->
+    <section id="horarios" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-6 md:px-10">
+            <div class="text-center mb-12 md:mb-16 reveal">
+                <span class="text-royal font-black uppercase tracking-[0.3em] text-xs mb-4 block italic">Cronograma Oficial</span>
+                <h2 class="text-3xl md:text-6xl font-black text-navy leading-none uppercase tracking-tighter mb-4">Escolha o seu <span class="text-royal">Treino.</span></h2>
+                <div class="flex flex-wrap justify-center gap-3 md:gap-4 text-[9px] md:text-[10px] font-black uppercase tracking-widest mt-6 md:mt-8">
+                    <span class="px-3 md:px-4 py-1.5 bg-infantil/10 text-amber-700 border border-infantil/30 rounded">Amarelo: Infantil</span>
+                    <span class="px-3 md:px-4 py-1.5 bg-iniciante/10 text-blue-700 border border-iniciante/30 rounded">Azul: Iniciante</span>
+                    <span class="px-3 md:px-4 py-1.5 bg-avancado/10 text-black border border-black/20 rounded">Preto: Avançado</span>
+                    <span class="px-3 md:px-4 py-1.5 bg-competicao/10 text-orange-700 border border-competicao/30 rounded">Laranja: Competição</span>
+                </div>
+                <p class="md:hidden text-gray-400 text-[10px] font-bold uppercase tracking-widest mt-8 animate-pulse italic">
+                    Arraste para o lado para ver o cronograma completo ›
+                </p>
+            </div>
+
+            <div class="schedule-scroll overflow-x-auto pb-8 reveal">
+                <table class="w-full border-collapse min-w-[1000px] shadow-2xl rounded-2xl overflow-hidden border border-gray-100">
+                    <thead>
+                        <tr class="bg-navy text-white uppercase text-xs tracking-widest">
+                            <th class="p-8 text-left border border-white/10">Horário</th>
+                            <th class="p-8 text-left border border-white/10">Segunda</th>
+                            <th class="p-8 text-left border border-white/10">Terça</th>
+                            <th class="p-8 text-left border border-white/10">Quarta</th>
+                            <th class="p-8 text-left border border-white/10">Quinta</th>
+                            <th class="p-8 text-left border border-white/10">Sexta</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-xs font-bold uppercase tracking-widest">
+                        <tr class="border-b border-gray-50">
+                            <td class="p-8 bg-gray-50 text-navy font-black border-r border-gray-100">07:00</td>
+                            <td class="p-8 bg-blue-50 text-iniciante border-l-4 border-iniciante">Iniciante / Masc</td>
+                            <td class="p-8 text-gray-200 italic">---</td>
+                            <td class="p-8 bg-blue-50 text-iniciante border-l-4 border-iniciante">Iniciante / Masc</td>
+                            <td class="p-8 text-gray-200 italic">---</td>
+                            <td class="p-8 bg-blue-50 text-iniciante border-l-4 border-iniciante">Iniciante / Masc</td>
+                        </tr>
+                        <tr class="border-b border-gray-50">
+                            <td class="p-8 bg-gray-50 text-navy font-black border-r border-gray-100">17:00</td>
+                            <td class="p-8 text-gray-200 italic">---</td>
+                            <td class="p-8 bg-amber-50 text-amber-700 border-l-4 border-infantil">Infantil I</td>
+                            <td class="p-8 text-gray-200 italic">---</td>
+                            <td class="p-8 bg-amber-50 text-amber-700 border-l-4 border-infantil">Infantil I</td>
+                            <td class="p-8 text-gray-200 italic">---</td>
+                        </tr>
+                        <tr class="border-b border-gray-50">
+                            <td class="p-8 bg-gray-50 text-navy font-black border-r border-gray-100">18:00</td>
+                            <td class="p-8 bg-amber-50 text-amber-700 border-l-4 border-infantil font-black">Infantil II</td>
+                            <td class="p-8 bg-green-50 text-wa border-l-4 border-wa">Funcional</td>
+                            <td class="p-8 bg-amber-50 text-amber-700 border-l-4 border-infantil font-black">Infantil II</td>
+                            <td class="p-8 bg-green-50 text-wa border-l-4 border-wa">Funcional</td>
+                            <td class="p-8 bg-amber-50 text-amber-700 border-l-4 border-infantil font-black">Infantil II</td>
+                        </tr>
+                        <tr class="border-b border-gray-50">
+                            <td class="p-8 bg-gray-50 text-navy font-black border-r border-gray-100">19:30</td>
+                            <td class="p-8 bg-blue-50 text-iniciante border-l-4 border-iniciante">Fem / Iniciante</td>
+                            <td class="p-8 bg-gray-100 text-black border-l-4 border-black">Avançado No Gi</td>
+                            <td class="p-8 bg-blue-50 text-iniciante border-l-4 border-iniciante">Fem / Iniciante</td>
+                            <td class="p-8 bg-gray-100 text-black border-l-4 border-black">Avançado Gi</td>
+                            <td class="p-8 bg-blue-50 text-iniciante border-l-4 border-iniciante">Fem / Iniciante</td>
+                        </tr>
+                        <tr>
+                            <td class="p-8 bg-gray-50 text-navy font-black border-r border-gray-100">21:00</td>
+                            <td class="p-8 bg-orange-50 text-orange-700 border-l-4 border-competicao font-black">Competição</td>
+                            <td class="p-8 text-gray-200 italic">---</td>
+                            <td class="p-8 bg-orange-50 text-orange-700 border-l-4 border-competicao font-black">Competição</td>
+                            <td class="p-8 text-gray-200 italic">---</td>
+                            <td class="p-8 bg-orange-50 text-orange-700 border-l-4 border-competicao font-black">Open Mat</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeria Section -->
+    <section id="galeria" class="py-16 md:py-24 bg-navy overflow-hidden">
+        <div class="container mx-auto px-6 md:px-10">
+            <div class="mb-12 md:mb-16 text-center reveal">
+                <h2 class="text-4xl md:text-8xl font-black text-white/10 uppercase tracking-tighter absolute -mt-6 md:-mt-10 left-0 w-full select-none">TREINAMENTO</h2>
+                <h3 class="text-3xl md:text-5xl font-black text-white relative z-10 uppercase tracking-tighter">Vivência no <span class="text-royal">Tatame.</span></h3>
+            </div>
+            
+            <!-- Grid Otimizado: 2 colunas no mobile | 4 no desktop -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <div class="rounded-2xl overflow-hidden aspect-square reveal shadow-2xl">
+                    <img src="public/AISelect_20260421_133923_Instagram.jpg" alt="Galeria 1" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700">
+                </div>
+                <div class="rounded-2xl overflow-hidden aspect-square reveal shadow-2xl" style="transition-delay: 100ms;">
+                    <img src="public/AISelect_20260421_134026_Instagram.jpg" alt="Galeria 2" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700">
+                </div>
+                <div class="rounded-2xl overflow-hidden aspect-square reveal shadow-2xl" style="transition-delay: 200ms;">
+                    <img src="public/AISelect_20260421_132704_Maps.jpg" alt="Galeria 3" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700">
+                </div>
+                <div class="rounded-2xl overflow-hidden aspect-square reveal shadow-2xl" style="transition-delay: 300ms;">
+                    <img src="public/AISelect_20260421_134249_Instagram.jpg" alt="Galeria 4" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700">
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Avaliações Section -->
+    <section id="avaliacoes" class="py-16 md:py-24 bg-gray-50 overflow-hidden">
+        <div class="container mx-auto px-6 md:px-10 relative">
+            <div class="mb-12 md:mb-16 reveal">
+                <h2 class="text-xs font-black uppercase tracking-[0.3em] text-royal mb-4 italic">Feedbacks Reais</h2>
+                <h3 class="text-3xl md:text-6xl font-black text-navy leading-none uppercase tracking-tighter">O que dizem os <br><span class="text-royal">nossos Guerreiros.</span></h3>
+                <div class="w-16 h-1 bg-navy mt-6 md:mt-10"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <!-- Testimonial 1 -->
+                <div class="bg-white p-12 rounded-3xl border border-gray-100 reveal shadow-2xl">
+                    <div class="flex text-wa mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    </div>
+                    <p class="text-navy text-2xl italic mb-10 leading-relaxed font-medium">
+                        "Jiu Jitsu de alto nível com uma didática excelente do professor Daniel. O ambiente é familiar e ótimo para crianças."
+                    </p>
+                    <div class="flex items-center gap-4 border-t border-gray-100 pt-8">
+                        <div class="w-12 h-12 bg-navy rounded-full flex items-center justify-center font-black text-white uppercase text-xs">MA</div>
+                        <div>
+                            <p class="font-black text-navy text-xs uppercase tracking-widest leading-none">Marcos Antônio</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-navy text-white p-12 rounded-3xl reveal shadow-2xl border-l-[10px] border-royal" style="transition-delay: 200ms;">
+                    <div class="flex text-royal mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    </div>
+                    <p class="text-white italic text-2xl mb-10 leading-relaxed font-medium">
+                        "Os profissionais são excelentes! Sempre se atualizando. Cada aluno é tratado com respeito as suas limitações. Parabéns Daniel e Letícia!"
+                    </p>
+                    <div class="flex items-center gap-4 border-t border-white/10 pt-8">
+                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center font-black text-navy uppercase text-xs">LN</div>
+                        <div>
+                            <p class="font-black text-white text-xs uppercase tracking-widest leading-none">LIMASNewsTV</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-16 md:py-24 bg-white border-t border-gray-100">
+        <div class="container mx-auto px-6 md:px-10">
+            <div class="max-w-4xl mx-auto">
+                <div class="mb-12 md:mb-16 reveal">
+                    <h2 class="text-xs font-black uppercase tracking-[0.3em] text-royal mb-4 italic">Dúvidas Frequentes</h2>
+                    <h3 class="text-3xl md:text-6xl font-black text-navy leading-none uppercase tracking-tighter">Respostas <span class="text-royal">Comuns.</span></h3>
+                    <div class="w-16 h-1 bg-navy mt-6 md:mt-10"></div>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- FAQ 1 -->
+                    <div class="faq-item p-6 md:p-10 bg-gray-50 rounded-2xl transition-all reveal">
+                        <button class="w-full flex justify-between items-center group text-left">
+                            <span class="text-sm md:text-lg font-black uppercase tracking-widest text-navy">Preciso de Kimono para a primeira aula?</span>
+                            <span class="text-royal font-black text-2xl group-hover:scale-150 transition-transform">+</span>
+                        </button>
+                        <div class="faq-answer text-sm text-gray-500 mt-6 leading-relaxed">
+                            Não se preocupa! Para a sua primeira aula experimental, venha com roupas confortáveis (moletom ou bermuda de compressão). Se depois você decidir se juntar ao time, te orientamos sobre o equipamento oficial.
+                        </div>
+                    </div>
+
+                    <!-- FAQ 2 -->
+                    <div class="faq-item p-6 md:p-10 bg-navy text-white rounded-2xl transition-all reveal" style="transition-delay: 100ms;">
+                        <button class="w-full flex justify-between items-center group text-left">
+                            <span class="text-sm md:text-lg font-black uppercase tracking-widest">A partir de que idade crianças podem treinar?</span>
+                            <span class="text-royal font-black text-2xl group-hover:scale-150 transition-transform">+</span>
+                        </button>
+                        <div class="faq-answer text-sm text-white/70 mt-6 leading-relaxed">
+                            O Jiu-Jitsu Infantil é ideal para crianças a partir dos 4 anos de idade. Temos turmas divididas por faixa etária para garantir que a didática seja perfeita para cada fase da infância.
+                        </div>
+                    </div>
+
+                    <!-- FAQ 3 -->
+                    <div class="faq-item p-6 md:p-10 bg-gray-50 rounded-2xl transition-all reveal" style="transition-delay: 200ms;">
+                        <button class="w-full flex justify-between items-center group text-left">
+                            <span class="text-sm md:text-lg font-black uppercase tracking-widest text-navy">Nunca treinei nada, o funcional é para mim?</span>
+                            <span class="text-royal font-black text-2xl group-hover:scale-150 transition-transform">+</span>
+                        </button>
+                        <div class="faq-answer text-sm text-gray-500 mt-6 leading-relaxed">
+                            Sim! O Treinamento Funcional na Headstrong é totalmente adaptável. Nossos professores respeitam suas limitações e focam em te dar saúde, mobilidade e força progressiva.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Google Maps -->
+    <div class="map-container h-[500px] w-full border-t border-gray-100">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3676.840782352875!2d-42.99427352469601!3d-22.826868879288224!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x999052b610738f%3A0xb3a8f50424072297!2sR.%20Palmira%20Lima%20dos%20Santos%2C%20100%20-%20Pacheco%2C%20S%C3%A3o%20Gon%C3%A7alo%20-%20RJ%2C%2024732-550!5e0!3m2!1spt-BR!2sbr!4v1713711900000!5m2!1spt-BR!2sbr" 
+            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white pt-24 pb-12 px-6 md:px-10">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20 border-b border-white/10 pb-20">
+                <div class="col-span-1 lg:col-span-2">
+                    <img src="public/AISelect_20260421_133151_Google.jpg" alt="Professor Daniel Viana" class="w-28 h-28 object-cover rounded-full border-4 border-royal mb-10 shadow-2xl">
+                    <p class="text-white/40 text-lg leading-relaxed max-w-sm mb-10">
+                        O melhor lugar para transformar sua disciplina e saúde através do Jiu-Jitsu e do Treinamento Funcional. Pacheco, São Gonçalo.
+                    </p>
+                    <div class="flex gap-6">
+                        <a href="https://instagram.com/headstrong_association" target="_blank" class="w-12 h-12 bg-white/10 flex items-center justify-center rounded-full hover:bg-royal transition-all">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                        </a>
+                        <a href="https://wa.me/5521999157423" target="_blank" class="w-12 h-12 bg-white/10 flex items-center justify-center rounded-full hover:bg-wa transition-all">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.67-1.612-.916-2.207-.242-.579-.487-.5-.67-.508-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-black uppercase tracking-widest text-xs mb-8 text-royal">Onde Estamos</h4>
+                    <p class="text-white/60 text-sm leading-loose">
+                        R. Palmira Lima dos Santos, 100 <br>
+                        Pacheco, São Gonçalo - RJ <br>
+                        CEP: 24732-550
+                    </p>
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=R.+Palmira+Lima+dos+Santos,+100+-+Pacheco,+São+Gonçalo+-+RJ" 
+                       target="_blank"
+                       class="inline-block mt-8 bg-white text-navy px-8 py-4 rounded font-black uppercase text-[10px] tracking-widest hover:bg-royal hover:text-white transition-all">
+                        Como Chegar
+                    </a>
+                </div>
+
+                <div>
+                    <h4 class="font-black uppercase tracking-widest text-xs mb-8 text-royal">Contato Direto</h4>
+                    <p class="text-white font-black text-2xl uppercase tracking-tighter mb-4">(21) 99915-7423</p>
+                    <a href="https://wa.me/5521999157423?text=Olá! Gostaria de falar com a equipe da Headstrong Pacheco." 
+                       target="_blank" rel="noopener noreferrer"
+                       class="text-wa font-bold text-sm hover:underline">Iniciar conversa no WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-black uppercase tracking-widest text-white/20">
+                <p>&copy; 2026 Headstrong Jiu-Jitsu Pacheco. Todos os direitos reservados.</p>
+                <div class="flex gap-10">
+                    <a href="#" class="hover:text-white transition-colors">Daniel Viana</a>
+                    <a href="#" class="hover:text-white transition-colors">Associação</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating (Mobile) -->
+    <a href="https://wa.me/5521999157423?text=Olá! Estou no site e gostaria de tirar uma dúvida." 
+       target="_blank" rel="noopener noreferrer"
+       class="fixed bottom-6 right-6 z-[100] bg-wa text-white p-5 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all md:hidden"
+       aria-label="WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.67-1.612-.916-2.207-.242-.579-.487-.5-.67-.508-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    </a>
+
+    <!-- Scripts -->
+    <script>
+        // Intersection Observer for Reveal Animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-item button').forEach(button => {
+            button.addEventListener('click', () => {
+                const item = button.parentElement;
+                const isActive = item.classList.contains('active');
+                
+                // Close other items
+                document.querySelectorAll('.faq-item').forEach(other => {
+                    other.classList.remove('active');
+                    const sign = other.querySelector('span:last-child');
+                    if (sign) sign.innerText = '+';
+                });
+
+                if (!isActive) {
+                    item.classList.add('active');
+                    const sign = item.querySelector('span:last-child');
+                    if (sign) sign.innerText = '-';
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-2xl', 'py-2');
+                header.classList.remove('py-0');
+            } else {
+                header.classList.remove('shadow-2xl', 'py-2');
+            }
+        });
+
+        // Smooth scroll adjustment for fixed header
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                mobileMenu.classList.add('hidden');
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const bodyRect = document.body.getBoundingClientRect().top;
+                    const elementRect = target.getBoundingClientRect().top;
+                    const elementPosition = elementRect - bodyRect;
+                    const offsetPosition = elementPosition - offset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
